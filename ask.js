@@ -2,7 +2,12 @@ module.exports = [
     {
         type: 'input',
         name: 'projectName',
-        message: '项目名称?',
+        message: '项目名称(默认admin)?',
+    },
+    {
+        type: 'input',
+        name: 'dbName',
+        message: '数据库名称(默认admin)?',
     },
     {
         type: 'input',
