@@ -1,5 +1,5 @@
 module.exports = {
-    databaseAddress: 'mongodb://127.0.0.1:27017/<%=projectName%>Dev',
+    databaseAddress: 'mongodb://127.0.0.1:27017/<%=dbName%>Dev',
     baseEmail:'@<%=projectName%>.com',
     port: 3333,
     baseUrl: '/v1/<%=projectName%>/',
