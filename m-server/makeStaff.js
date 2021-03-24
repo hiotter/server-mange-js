@@ -51,6 +51,11 @@ const staffSchema = mongoose.Schema({
 let Staff = mongoose.model('Staff', staffSchema)
 
 newRole.save().then((res) => {
+    let adminStaff = Staff.findOne({ username: `admin${Key.baseEmail}` })
+    if (adminStaff) {
+        console.log(`数据库${Key.databaseAddress}已存在管理员用户，无需重复创建，请确认`)
+        return
+    }
     let newStaff = new Staff({
         name: '管理员',
         nickname: '管理员',
