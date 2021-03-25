@@ -2,110 +2,36 @@
   <div class="container-normal container-new">
     <div class="d-flex a-center mb-2">
       <a-button type="primary" @click="callCreate">创建员工</a-button>
-      <a-button type="primary" class="ml-auto" @click="refresh"
-        >刷新表格</a-button
-      >
+      <a-button type="primary" class="ml-auto" @click="refresh">刷新表格</a-button>
     </div>
-    <a-table
-      bordered
-      :columns="columns"
-      :dataSource="staffs"
-      rowKey="username"
-      :pagination="pagination"
-      @change="handleChange"
-    >
+    <a-table bordered :columns="columns" :dataSource="staffs" rowKey="username" :pagination="pagination" @change="handleChange">
       <!-- 自定义搜索filter -->
-      <div
-        slot="filterDropdown"
-        slot-scope="{ setSelectedKeys, selectedKeys, confirm, column }"
-        class="custom-filter-dropdown"
-      >
-        <a-input
-          v-ant-ref="(c) => (searchInput = c)"
-          :placeholder="`搜索 ${column.title}`"
-          :value="selectedKeys[0]"
-          @change="
-            (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
-          "
-          @pressEnter="() => handleSearch(selectedKeys, confirm)"
-          style="width: 188px; margin-bottom: 8px; display: block"
-        />
-        <a-button
-          type="primary"
-          @click="() => handleSearch(selectedKeys, confirm)"
-          icon="search"
-          size="small"
-          style="width: 100%; margin-right: 8px"
-          >Search</a-button
-        >
+      <div slot="filterDropdown" slot-scope="{ setSelectedKeys, selectedKeys, confirm, column }" class="custom-filter-dropdown">
+        <a-input v-ant-ref="(c) => (searchInput = c)" :placeholder="`搜索 ${column.title}`" :value="selectedKeys[0]"
+          @change="(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])" @pressEnter="() => handleSearch(selectedKeys, confirm)" style="width: 188px; margin-bottom: 8px; display: block"/>
+        <a-button type="primary" @click="() => handleSearch(selectedKeys, confirm)" icon="search" size="small" style="width: 100%; margin-right: 8px">Search</a-button>
       </div>
-      <a-icon
-        slot="filterIcon"
-        slot-scope="filtered"
-        type="search"
-        :style="{ color: filtered ? '#30A679' : undefined }"
-      />
+      <a-icon slot="filterIcon" slot-scope="filtered" type="search" :style="{ color: filtered ? '#30A679' : undefined }"/>
       <template slot="role" slot-scope="record">
         {{ record.role.name }}
       </template>
       <template slot="avatar" slot-scope="avatar">
-        <img
-          :src="avatar"
-          alt=""
-          style="width: 60px; height: 60px; cursor: pointer; object-fit: cover"
-          @click="avatarHandlePreview(avatar)"
-        />
-        <a-modal
-          :visible="previewVisibleAvatar"
-          :footer="null"
-          @cancel="handleCancelAvatar"
-        >
+        <img :src="avatar" alt="" style="width: 60px; height: 60px; cursor: pointer; object-fit: cover" @click="avatarHandlePreview(avatar)"/>
+        <a-modal :visible="previewVisibleAvatar" :footer="null" @cancel="handleCancelAvatar">
           <img alt="example" style="width: 100%" :src="avatarPreviewImage" />
         </a-modal>
       </template>
       <template slot="action" slot-scope="record">
-        <a-button
-          type="dashed"
-          class="mr-1"
-          @click="callEdit(record)"
-          v-permission:btn="'1-0'"
-          >编辑</a-button
-        >
-        <a-button
-          type="primary"
-          class="mr-1"
-          @click="callReset(record)"
-          v-permission:btn="'1-1'"
-          >重置密码</a-button
-        >
-        <a-button
-          type="danger"
-          @click="__callDelete(record)"
-          v-permission:btn="'1-2'"
-          >删除</a-button
-        >
+        <a-button type="dashed" class="mr-1" @click="callEdit(record)" v-permission:btn="'1-0'">编辑</a-button>
+        <a-button type="primary" class="mr-1" @click="callReset(record)" v-permission:btn="'1-1'">重置密码</a-button>
+        <a-button type="danger" @click="__callDelete(record)" v-permission:btn="'1-2'">删除</a-button>
       </template>
     </a-table>
     <!-- 编辑界面 -->
-    <a-modal
-      :title="modal === 'edit' ? '编辑员工' : '创建员工'"
-      width="600px"
-      :destroyOnClose="true"
-      :visible="modal !== ''"
-      centered
-      @ok="__callSave"
-      @cancel="callCancel"
-      okText="确定"
-      cancelText="取消"
-    >
+    <a-modal :title="modal === 'edit' ? '编辑员工' : '创建员工'" width="600px" :destroyOnClose="true" :visible="modal !== ''" centered @ok="__callSave" @cancel="callCancel" okText="确定" cancelText="取消">
       <div class="mb-1">
         <a-radio-group buttonStyle="solid" v-model="staff.role">
-          <a-radio-button
-            :value="item.value"
-            v-for="item in roles"
-            :key="item.text"
-            >{{ item.text }}</a-radio-button
-          >
+          <a-radio-button :value="item.value" v-for="item in roles" :key="item.text">{{ item.text }}</a-radio-button>
         </a-radio-group>
       </div>
       <div class="mb-1">
@@ -118,11 +44,7 @@
           </a-input>
         </div>
         <div v-if="modal === 'create'">
-          <a-input
-            placeholder="请输入用户名"
-            v-model="staff.username"
-            class="mb-1"
-          >
+          <a-input placeholder="请输入用户名" v-model="staff.username" class="mb-1">
             <div slot="addonBefore" style="width: 60px">用户名</div>
             <div slot="addonAfter" style="width: 180px">{{ email }}</div>
           </a-input>
@@ -137,25 +59,13 @@
       <div>
         <div style="width: 100px" class="mb-1">员工头像</div>
         <div class="clearfix">
-          <a-upload
-            name="picture"
-            :action="action + '/uploadsImgLimit'"
-            list-type="picture-card"
-            :file-list="fileListAvatar"
-            :data="{ project: 'marryTest' }"
-            @preview="handlePreviewAvatar"
-            @change="handleChangeImgAvatar"
-          >
+          <a-upload name="picture" :action="action + '/uploadsImgLimit'" list-type="picture-card" :file-list="fileListAvatar" :data="{ project: 'marryTest' }" @preview="handlePreviewAvatar" @change="handleChangeImgAvatar">
             <div v-if="fileListAvatar.length < 1">
               <a-icon type="plus" />
               <div class="ant-upload-text">Upload</div>
             </div>
           </a-upload>
-          <a-modal
-            :visible="previewVisibleAvatar"
-            :footer="null"
-            @cancel="handleCancelAvatar"
-          >
+          <a-modal :visible="previewVisibleAvatar" :footer="null" @cancel="handleCancelAvatar">
             <img alt="example" style="width: 100%" :src="previewAvatarUrl" />
           </a-modal>
         </div>
@@ -164,21 +74,9 @@
     <!-- 重置密码 -->
     <a-modal
       :title="'重置密码'"
-      width="400px"
-      :destroyOnClose="true"
-      centered
-      :visible="resetModal"
-      @ok="__callResetPassword"
-      @cancel="resetModal = false"
-      okText="确定"
-      cancelText="取消"
-    >
+      width="400px" :destroyOnClose="true" centered :visible="resetModal" @ok="__callResetPassword" @cancel="resetModal = false" okText="确定" cancelText="取消">
       <div class="d-flex a-center">
-        <a-input
-          addonBefore="新密码"
-          placeholder="请输入新密码"
-          v-model="staff.password"
-        />
+        <a-input addonBefore="新密码" placeholder="请输入新密码" v-model="staff.password"/>
       </div>
     </a-modal>
   </div>
