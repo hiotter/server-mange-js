@@ -7,7 +7,7 @@
       >
         <div>
           <img
-            src="../assets/baxiaocao.jpg"
+            src="../assets/ebuy-logo.png"
             alt=""
             style="width: 100px; margin: 0 15px 0 0"
             class="logo-icon"
