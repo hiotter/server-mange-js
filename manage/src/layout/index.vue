@@ -19,7 +19,7 @@
               style="width: 50px; margin: 0 15px 0 0"
               class="logo-icon"
             />
-            <div style="font-size: 18px">拔小草</div>
+            <div style="font-size: 18px">EBUY</div>
           </div>
           <!-- <img v-if="collapsed" src="../assets/logo.jpg" alt="" style="width:40px"> -->
         </div>
