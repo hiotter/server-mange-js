@@ -7,7 +7,7 @@
       >
         <div>
           <img
-            src="../assets/ebuy-logo.png"
+            src="../assets/logo-hita.png"
             alt=""
             style="width: 100px; margin: 0 15px 0 0"
             class="logo-icon"
