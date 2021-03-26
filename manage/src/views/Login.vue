@@ -88,8 +88,8 @@ export default {
 }
 .logo-icon {
   border-radius: 25px;
-  background: #f7f7f7;
-  box-shadow: 20px 20px 60px #d2d2d2, -20px -20px 60px #ffffff;
+  /* background: #f7f7f7; */
+  /* box-shadow: 20px 20px 60px #d2d2d2, -20px -20px 60px #ffffff; */
 }
 .login-form {
   color: black;
@@ -117,11 +117,11 @@ input {
   cursor: pointer;
   color: white;
   border-radius: 3px;
-  background: #c72c2e;
+  background: #5597f1;
   transition: all 0.3s;
 }
 .neumorphism-btn:hover {
-  background: rgba(199, 44, 46, 0.7);
+  background: rgba(64, 18, 231, 0.7);
   transition: all 0.3s;
   transform: translateY(-3px);
   box-shadow: 20px 20px 60px #dfe3ee, -20px -20px 60px #eeeeee;
